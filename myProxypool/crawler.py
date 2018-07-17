@@ -1,6 +1,5 @@
 import re
 from .utils import get_page
-from pyquery import PyQuery as pq
 
 class ProxyMetaclass(type):
     def __new__(cls, name, bases, attrs):
