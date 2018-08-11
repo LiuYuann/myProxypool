@@ -28,7 +28,7 @@ pip3 install -r requirements.txt
 #### 打开代理池和API
 
 ```
-python3 run.py
+python run.py
 ```
 
 ## 获取代理
