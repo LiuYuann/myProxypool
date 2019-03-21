@@ -11,13 +11,13 @@ class Redis():
         if self.count_all() >= POOL_UPPER_THRESHOLD:
             pass
         else:
-            self.__redis.zadd('proxy', 100, proxy)
+            self.__redis.zadd('proxy', {proxy:100})
 
     def decrease(self, proxy):
         if self.__redis.zscore('proxy', proxy) < 80:
             self.__redis.zrem('proxy', proxy)
         else:
-            self.__redis.zincrby('proxy', proxy, -5)
+            self.__redis.zincrby('proxy', amount=-5,value=proxy)
     def count_available(self):
         """
         :return: 当前可用代理总数
@@ -34,7 +34,7 @@ class Redis():
         return self.__redis.zrevrange('proxy', 0, BATCH_TEST_SIZE - 1)#取出分数前BATCH_TEST_SIZE名的记录用来测试
 
     def available(self, proxy):
-        self.__redis.zadd('proxy', 100, proxy)
+        self.__redis.zadd('proxy', {proxy:100})
 
     def random(self):
         result = self.__redis.zrevrange('proxy', 0, 9, False)#取出分数前十名的记录
